@@ -1,0 +1,14 @@
+<?php
+/**
+ * @var \Magento\Catalog\Block\Navigation $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+<div class="block block-all-categories-aside">
+    <div class="block-title">
+        <strong><?= $escaper->escapeHtml($block->getTitle()); ?></strong>
+    </div>
+    <div class="block-content">
+        <?= $block->getCategoryHtml(); ?>
+    </div>
+</div>

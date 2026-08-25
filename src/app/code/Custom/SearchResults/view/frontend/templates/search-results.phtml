@@ -1,0 +1,64 @@
+<?php
+/**
+ * @var \Custom\SearchResults\Block\SearchResults $block
+ */
+
+$_products = $block->getProducts();
+$_searchQuery = $block->getSearchQuery();
+$_searchResultsToolbar = $block->getToolbar();
+$_searchResultsToolbarMode = $_searchResultsToolbar->getCurrentMode();
+$_searchResultPager = $block->getPager(); ?>
+
+<div class="page-two-columns page__search-results">
+    <aside class="page-two-columns__sidebar sidebar">
+        <?= $block->getChildHtml('sidebar_categories'); ?>
+        <?= $block->getChildHtml('sidebar_main'); ?>
+        <?= $block->getChildHtml('sidebar_additional'); ?>
+    </aside>
+
+    <div class="page-two-columns__content">
+        <div class="search-results__info">
+            <h1 class="page__title search-results__title">
+                <?= __('Search'); ?>
+            </h1>
+
+            <?php if($_searchQuery): ?>
+                <p class="search-results__description">
+                    <?= __('Results for: '); ?>
+                    <strong><?= __($_searchQuery); ?></strong>
+                </p>
+            <?php endif; ?>
+        </div>
+
+        <?php if ($_products && $_products->getSize()): ?>
+            <?php if($_searchResultsToolbar): ?>
+                <div class="category__toolbar">
+                    <?= $_searchResultsToolbar->toHtml(); ?>
+                </div>
+            <?php endif; ?>
+            
+            <div class="product-list <?= __($_searchResultsToolbarMode); ?>">
+                <?php if(!empty($_products)): ?>
+                    <?php foreach ($_products as $_product): ?>
+                        <?php
+                            $_id = $_product->getId();
+                            $_productCard = $block->getProductCard($_id);
+
+                            if($_productCard): ?>
+                                <?= $_productCard; ?>
+                            <?php endif;
+                        ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+
+            <?php if($_searchResultPager): ?>
+                <?= $_searchResultPager; ?>
+            <?php endif; ?>
+        <?php else: ?>
+            <p>
+                <?= __("No couldn't find any products matching your search criteria. Try checking the spelling or using fewer keywords."); ?>
+            </p>
+        <?php endif; ?>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+<?php
+/** @var \Custom\FeaturedCategories\Block\FeaturedCategories $block */
+
+/*
+Women: 20
+-> Tops: 21
+->-> Jackets: 21
+->-> Hoodies: 24
+->-> Tees: 25
+->-> Bras & Tanks: 26
+-> Bottom: 22
+->-> Pants: 27
+->-> Shorts: 28
+
+Men: 11
+-> Top: 12
+->-> Jackets: 14
+->-> Hoodies: 15
+->-> Tees: 16
+->-> Tanks: 17
+-> Bottom: 13
+->-> Pants: 18
+->-> Shorts: 19
+
+Gear: 3
+-> Bags: 4
+-> Fitness Equipment: 5
+-> Watches: 6
+*/
+$categoryIds = [
+    20, // Women
+    12, // Men - Top
+    14, // Men - Jackets
+    28, // Shorts
+    3   // Gear
+];
+$_categories = $block->getCategories($categoryIds);
+
+// Check if the categories data is available
+if ($_categories && $_categories->getSize()): ?>
+<div class="block">
+    <h2 class="block-title">
+        <?= __('Featured Categories') ?>
+    </h2>
+
+    <ul class="block__list">
+    <?php foreach ($_categories as $_category): ?>
+        <?php
+            $categoryName = __($_category->getName());
+            $categoryUrl = __($_category->getUrl());
+        ?>
+        <li class="block__list-item">
+            <a class="block__list-link" href="<?= __($categoryUrl) ?>" title="<?= __($categoryName) ?>">
+                <?= __($categoryName) ?>
+            </a>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>

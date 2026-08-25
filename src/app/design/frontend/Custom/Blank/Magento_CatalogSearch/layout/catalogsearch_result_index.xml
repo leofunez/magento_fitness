@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+        <body>
+            <referenceContainer name="content">
+                <container name="search.wrapper" htmlTag="div" htmlClass="wrapper" before="-" />
+
+                <block class="Custom\SearchResults\Block\SearchResults"
+                       name="search.result"
+                       template="Custom_SearchResults::search-results.phtml"
+                       before="-"
+                />
+            </referenceContainer>
+
+            <move element="search.result" destination="search.wrapper" />
+
+            <!-- Aside -->
+                <referenceContainer name="sidebar.main">
+                    <block class="Custom\FeaturedCategories\Block\FeaturedCategories"
+                            name="featured.categories"
+                            template="Custom_FeaturedCategories::featured-categories-sidebar.phtml"
+                    />
+                </referenceContainer>
+                <move element="featured.categories" destination="search.result" as="sidebar_categories"/>
+                <move element="sidebar.main" destination="search.result" as="sidebar_main" />
+                <move element="sidebar.additional" destination="search.result" as="sidebar_additional" />
+            <!-- .Aside -->
+        </body>
+</page>

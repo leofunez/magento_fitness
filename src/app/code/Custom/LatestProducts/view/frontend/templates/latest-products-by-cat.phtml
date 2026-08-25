@@ -1,0 +1,87 @@
+<?php
+/** @var \Custom\LatestProducts\Block\LatestProducts $block */
+
+$categoryIds = [
+    20, // Women
+    12, // Men - Top
+    14, // Men - Jackets
+    13, // Men - Shorts
+    3   // Gear
+];
+
+$_productsByCat = $block->getLatestProductsByCategory($categoryIds); ?>
+
+<section class="section__content">
+    <h2 class="block-featured__title">
+        <span class="block-featured__title-span">
+            <?= __('Featured Products'); ?>
+        </span>
+    </h2>
+
+    <div class="latest-products__slick slick__has-tabs__">
+        <?php foreach ($_productsByCat as $categoryId => $products): ?>
+            <?php $categoryName = $block->getCategoryName($categoryId); ?>
+
+            <div class="product-list product-list--is-slick" data-category-name="<?= $categoryName; ?>">
+                <?php
+                foreach ($products as $_product): ?>
+                    <?php
+                        $_id = $_product->getId();
+                        $_productBlock = $block->getProductCard($_id);
+                    ?>
+                    <?= $_productBlock; ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</section>
+
+<script type="text/javascript">
+    require(['jquery', 'slick'], function($){
+        $('.latest-products__slick')
+        .slick({
+            centerMode: false,
+            arrows: false,
+            lazyLoad: 'ondemand',
+            centerPadding: '100px',
+            dots: true,
+            autoplay: false,
+            autoplaySpeed: 3000,
+            slidesToShow: 1,
+            
+            fade: true,
+            infinite: true,
+            speed: 500,
+
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        centerMode: false,
+                        centerPadding: '40px',
+                        slidesToShow: 1
+                    }
+                },
+                {
+                    breakpoint: 580,
+                    settings: {
+                        arrows: false,
+                        centerMode: false,
+                        centerPadding: '10px',
+                        slidesToShow: 1
+                    }
+                }
+            ],
+            customPaging: function(slider, i) {
+                var currentItem = $(slider.$slides[i])
+                var currentTitle = currentItem.find('.product-list').attr('data-category-name');
+                return `<button type='button' class='slick-slider__tab'>${currentTitle}</button>`;
+            }
+        })
+        .on('init', function(event, slick) {
+            console.log(slick);
+            $(slick.$dots).addClass('slick-slider__tabs').removeClass('slick-dots');
+        });
+    });
+</script>

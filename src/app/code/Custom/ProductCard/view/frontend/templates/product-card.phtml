@@ -1,0 +1,65 @@
+<?php
+/** @var \Custom\ProductCard\Block\ProductCard $block */
+
+$_productId = (int)$block->getData('product_id');
+$_product = $block->getProduct($_productId);
+
+if ($_product): ?>
+    <article class="product-card">
+        <?php
+            $_url = $block->getProductUrl($_product);
+            $_imageUrl = $block->getImageUrl($_product);
+            $_name = $_product->getName();
+            $_reviews = $block->getReviewsSummaryHtml($_product, 'short', false);
+            $_price = $block->getPriceHtml($_product);
+            $_colors = $block->getColorOptions($_product);
+            $_reviews = $block->getReviews($_productId);
+        ?>
+        <a class="product-card__photo-add" href="<?= $_url; ?>">
+            <?php if($_imageUrl): ?>
+                <img class="product-card__image" 
+                    src="<?= $_imageUrl; ?>" 
+                    alt="<?= __($_name); ?>" />
+            <?php endif; ?>
+
+            <button class="button button__primary button--is-small">
+                <?= __('View Product') ?>
+            </button>
+        </a>
+
+        <div class="product-card__reviews">
+            <?= $_reviews ?: "<p class='no-reviews'>".__('No Reviews')."</p>"; ?>
+        </div>
+
+        <div class="product-card__info">
+            <?php if($_name): ?>
+                <h2 class="product-card__name">
+                    <a href="<?= $_url; ?>">
+                        <?= __($_name); ?>
+                    </a>
+                </h2>
+            <?php endif; ?>
+            
+            <?php if($_price): ?>
+                <div class="product-card__price">
+                    <?= $_price; ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($_colors)): ?>
+                <div class="product-card__colors">
+                    <div class="swatch-attribute color">
+                        <?php foreach ($_colors as $color): ?>
+                            <div
+                                class="swatch-option color"
+                                style="background-color: <?= __($color) ?>;"
+                            ></div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </article>
+<?php else: ?>
+    <p>Product not found.</p>
+<?php endif; ?>

@@ -1,0 +1,44 @@
+<?php
+/** @var \Custom\Category\Block\Category $block */
+
+$_products = $block->getProducts();
+$_categoryName = strip_tags($block->getChildHtml('category_name'));
+$_categoryImage = $block->getChildHtml('image');
+$_categoryToolbar = $block->getToolbar();
+$_categoryToolbarMode = $_categoryToolbar->getCurrentMode();
+$_categoryPager = $block->getPager();
+
+if ($_products->getSize()): ?>
+    <div class="page__content">
+        <div class="wrapper">
+            <div class="category">
+                <aside class="category__aside">
+                    <?php if($block->getChildHtml('sidebar_main')): ?>
+                        <?= $block->getChildHtml('sidebar_main'); ?>
+                    <?php endif; ?>
+                    
+                    <?php if($block->getChildHtml('sidebar_additional')): ?>
+                        <?= $block->getChildHtml('sidebar_additional'); ?>
+                    <?php endif; ?>
+                </aside>
+
+                <div class="category__products">
+                    <?php if($_categoryName): ?>
+                        <h1 class="page__title">
+                            <?= $_categoryName; ?>
+                        </h1>
+                    <?php endif; ?>
+
+                    <?php if ($_categoryImage): ?>
+                        <div class="category__image">
+                            <?= $_categoryImage; ?>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <!-- This is injected in the catalog_category_view.xml -->
+                    <?= $block->getChildHtml('ajax_product_list'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

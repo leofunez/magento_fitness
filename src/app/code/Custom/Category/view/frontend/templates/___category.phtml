@@ -1,0 +1,66 @@
+<?php
+/** @var \Custom\Category\Block\Category $block */
+
+$_products = $block->getProducts();
+$_categoryName = strip_tags($block->getChildHtml('category_name'));
+$_categoryImage = $block->getChildHtml('image');
+$_categoryToolbar = $block->getToolbar();
+$_categoryToolbarMode = $_categoryToolbar->getCurrentMode();
+$_categoryPager = $block->getPager();
+
+if ($_products->getSize()): ?>
+    <div class="page__content">
+        <div class="wrapper">
+            <div class="category">
+                <aside class="category__aside">
+                    <?php if($block->getChildHtml('sidebar_main')): ?>
+                        <?= $block->getChildHtml('sidebar_main'); ?>
+                    <?php endif; ?>
+                    
+                    <?php if($block->getChildHtml('sidebar_additional')): ?>
+                        <?= $block->getChildHtml('sidebar_additional'); ?>
+                    <?php endif; ?>
+                </aside>
+
+                <div class="category__products">
+                    <?php if($_categoryName): ?>
+                        <h1 class="page__title">
+                            <?= $_categoryName; ?>
+                        </h1>
+                    <?php endif; ?>
+
+                    <?php if ($_categoryImage): ?>
+                        <div class="category__image">
+                            <?= $_categoryImage; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if($_categoryToolbar): ?>
+                        <div class="category__toolbar">
+                            <?= $_categoryToolbar->toHtml(); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="product-list <?= __($_categoryToolbarMode); ?>">
+                        <?php if(!empty($_products)): ?>
+                            <?php foreach ($_products as $_product): ?>
+                                <?php
+                                    $_id = $_product->getId();
+                                    $_productCard = $block->getProductCard($_id);
+
+                                    if($_productCard): ?>
+                                        <?= $_productCard; ?>
+                                    <?php endif;
+                                ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+
+                    <?php if($_categoryPager): ?>
+                        <?= $_categoryPager; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

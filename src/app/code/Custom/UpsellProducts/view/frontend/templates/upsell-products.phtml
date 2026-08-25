@@ -1,0 +1,25 @@
+<?php
+/** @var \Custom\UpsellProducts\Block $block */
+
+$_products = $block->getUpsellProducts();
+
+if (count($_products)): ?>
+    <div class="block__card-list">
+        <h2 class="block__title">
+            <?= __('You may also be interested in') ?>
+        </h2>
+
+        <div class="product-list">
+            <?php foreach ($_products as $_product): ?>
+                <?php
+                    $_id = $_product->getId();
+                    $_productCard = $block->getProductCard($_id);
+
+                    if ($_productCard) {
+                        echo $_productCard;
+                    }
+                ?>
+            <?php endforeach ;?>
+        </div>
+    </div>
+<?php endif; ?>

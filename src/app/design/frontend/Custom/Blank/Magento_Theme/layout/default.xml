@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <!-- Jquery -->
+        <link src="https://code.jquery.com/jquery-3.7.1.min.js" src_type="url" />
+
+        <!-- Slick JS -->
+        <link src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" src_type="url"/>
+
+        <!-- Local -->
+        <script src="js/main.js" />
+    </head>
+
+    <body>
+        <referenceBlock name="logo" remove="true" />
+        <referenceBlock name="header" remove="true" />
+
+        <!-- Header -->
+        <referenceContainer name="header.container" htmlClass="header">
+            <!-- Sticky -->
+            <container name="header.sticky" htmlTag="div" htmlClass="header__sticky">
+                <block
+                    name="header.sticky_container"
+                    class="Magento\Framework\View\Element\Template"
+                    template="Magento_Theme::html/header/header-sticky.phtml"
+                >
+                    <block 
+                        class="Magento\Theme\Block\Html\Topmenu" 
+                        name="catalog.topnav.secondary" 
+                        template="Magento_Theme::html/main-menu.phtml" 
+                        after="header.links" 
+                    />
+
+                    <block 
+                        class="Magento\Checkout\Block\Cart\Sidebar" 
+                        name="minicart.secondary" 
+                        template="Magento_Theme::html/mini-cart.phtml" 
+                        after="header.links" 
+                    />
+                </block>
+            </container>
+            <!-- .Sticky -->
+
+            <!-- Top -->
+            <container name="header.topLinks" htmlTag="div" htmlClass="header_top-links" />
+
+            <container
+                name="header.top"
+                after="header.topLinks"
+                htmlTag="div"
+                htmlClass="header__top"
+            >
+                <block
+                    name="header.banner"
+                    class="Magento\Framework\View\Element\Template"
+                    template="Magento_Theme::html/header/header-banner.phtml"
+                />
+            </container>
+            <!-- .Top -->
+
+            <container
+                name="header.middle"
+                after="header.top"
+                htmlTag="div"
+                htmlClass="header__middle"
+            >
+                <container
+                    name="header.wrapper"
+                    htmlTag="div"
+                    htmlClass="header__wrapper"
+                >
+                    <!-- Logo -->
+                    <container
+                        name="header.logo"
+                        htmlClass="header__logo"
+                        htmlTag="div"
+                        before="-"
+                    >
+                        <block
+                            name="custom_logo_block" class="Magento\Theme\Block\Html\Header\Logo"
+                        >
+                            <arguments>
+                                <argument name="logo_file" xsi:type="string">images/logo.png</argument>
+                                <argument name="logo_img_width" xsi:type="number">300</argument>
+                                <argument name="logo_img_height" xsi:type="number">100</argument>
+                            </arguments>
+                        </block>
+                    </container>
+                    <!-- .Logo -->
+
+                    <!-- Text -->
+                    <block
+                        name="header.text"
+                        after="logo"
+                        class="Magento\Framework\View\Element\Template"
+                        template="Magento_Theme::html/header/header-text.phtml"
+                    />
+                    <!-- .Text -->
+                    
+                    <!-- Search Cart -->
+                    <container
+                        name="header.search-cart"
+                        after="header.text"
+                        htmlTag="div"
+                        htmlClass="header__search"
+                    />
+                    <!-- .Search Cart -->
+                </container>
+            </container>
+            <!-- .Middle -->
+        </referenceContainer>
+
+        <move element="header.links" destination="header.topLinks" before="-" />
+        <move element="top.search" destination="header.search-cart" before="-"/>
+        <move element="minicart" destination="header.search-cart" after="top.search"/>
+
+        <referenceBlock name="top.search">
+            <arguments>
+                <argument name="placeholder" xsi:type="string">Search...</argument>
+            </arguments>
+        </referenceBlock>
+        <!-- .Header -->
+
+        <!-- Bottom -->
+            <!-- Nav Menu -->
+                <referenceBlock name="catalog.topnav">
+                    <action method="setTemplate">
+                        <argument name="template" xsi:type="string">Magento_Theme::html/main-menu.phtml</argument>
+                    </action>
+                </referenceBlock>
+            <!-- .Nav Menu -->
+        <!-- .Bottom -->
+
+        <!-- Footer -->
+        <referenceBlock name="footer" remove="true" />
+        <referenceContainer name="footer-container">
+            <block
+                class="Magento\Framework\View\Element\Template"
+                name="footer.custom"
+                template="Magento_Theme::html/footer.phtml"
+                before="footer"
+            />
+        </referenceContainer>
+
+        <move element="copyright" destination="footer.custom" />
+        <!-- .Footer -->
+    </body>
+</page>

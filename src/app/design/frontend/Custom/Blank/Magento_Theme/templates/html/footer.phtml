@@ -1,0 +1,95 @@
+<?php
+/**
+ * @var $block \Magento\Framework\View\Element\Template
+ */
+
+ $logoWhite = $block->getViewFileUrl('images/logo_white.png');
+ $franklinLogo = $block->getViewFileUrl('images/franklin-energy-logo.png');
+?>
+<div class="footer__content">
+    <div class="wrapper">
+        <div class="footer__columns">
+            <div class="footer__column footer__left">
+                <a class="footer__left-logo" href="/">
+                    <img src="<?= $block->escapeUrl($logoWhite); ?>" alt="PSE&G" />
+                </a>
+                <span class="footer__left-pipe"></span>
+                <p class="footer__left-text">Marketplace</p>
+            </div>
+
+            <div class="footer__column">
+                <h3 class="footer__heading">
+                    <a href="/" class="footer__heading-link">Shop All</a>
+                </h3>
+                <ul class="footer__links">
+                    <li>
+                        <a href="<?= $block->escapeUrl($block->getUrl('contact')) ?>" class="footer__link">On Sale</a>
+                    </li>
+                    <li>
+                        <a href="<?= $block->escapeUrl($block->getUrl('shipping-policy')) ?>" class="footer__link">Energy Efficiency Program</a>
+                    </li>
+                    <!-- <li>
+                        <a href="<?= $block->escapeUrl($block->getUrl('customer/account')) ?>" class="footer__link">My Account</a>
+                    </li> -->
+                </ul>
+            </div>
+
+            <div class="footer__column">
+                <h3 class="footer__heading">
+                    <a href="/" class="footer__heading-link">Learn More</a>
+                </h3>
+                <ul class="footer__links">
+                    <li>
+                        <a href="/" target="_blank" class="footer__link">
+                            <?= __('FAQs') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $block->escapeUrl($block->getUrl('about-us')) ?>" class="footer__link">
+                            <?= __('Privacy') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $block->escapeUrl($block->getUrl('about-us')) ?>" class="footer__link">
+                            <?= __('Terms and Conditions') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $block->escapeUrl($block->getUrl('about-us')) ?>" class="footer__link">
+                            <?= __('Shipping & Returns') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $block->escapeUrl($block->getUrl('about-us')) ?>" class="footer__link">
+                            <?= __('Contact Us') ?>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer__column footer__right">
+                <p class="footer__right-text">
+                    <?= __('Hosted by') ?>
+                </p>
+                <img class="footer__right-logo" src="<?= $block->escapeUrl($franklinLogo); ?>" />
+                <a class="footer__right-button" href="https://nj.pseg.com/" target="_blank">
+                    <?= __('VISIT NJ.PSEG.COM') ?>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer__bottom">
+        <div class="wrapper">
+            <p class="footer__copyright">© 2025 Franklin Energy</p>
+
+            <div class="footer__social">
+                <a href="https://twitter.com/PSEGdelivers" class="footer__social-link twitter" target="_blank"></a>
+                <a href="https://www.facebook.com/PSEG" class="footer__social-link facebook" target="_blank"></a>
+                <a href="https://www.instagram.com/pseg/" class="footer__social-link instagram" target="_blank"></a>
+                <a href="https://youtube.com/@PSEGInc" class="footer__social-link youtube" target="_blank"></a>
+                <a href="https://linkedin.com/company/pseg" class="footer__social-link linkedin" target="_blank"></a>
+            </div>
+        </div>
+    </div>
+</div>

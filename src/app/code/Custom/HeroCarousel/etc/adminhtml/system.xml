@@ -1,0 +1,289 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+
+    <system>
+        <section id="hero_carousel"
+                 translate="label"
+                 sortOrder="500"
+                 showInDefault="1"
+                 showInWebsite="1"
+                 showInStore="1">
+            <label>Hero Carousel</label>
+            <tab>general</tab>
+            <resource>Custom_HeroCarousel::config</resource>
+
+            <!-- Enable -->
+            <group id="general"
+                   translate="label"
+                   sortOrder="10"
+                   showInDefault="1"
+                   showInWebsite="1"
+                   showInStore="1">
+
+                <label>Visibility</label>
+
+                <field id="enable"
+                       translate="label"
+                       type="select"
+                       sortOrder="10"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable Hero Carousel</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <!-- .Enable -->
+
+            <!-- Items -->
+            <group id="items"
+                translate="label"
+                sortOrder="20"
+                showInDefault="1"
+                showInWebsite="1"
+                showInStore="1">
+            
+                <label>Carousel Items</label>
+
+                <!-- Item 1 -->
+                <group id="item1"
+                       translate="label"
+                       sortOrder="10"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Item 1</label>
+                    
+                    <!-- Heading -->
+                    <field
+                        id="item1_heading"
+                        translate="label"
+                        type="text"
+                        sortOrder="10"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>Heading</label>
+                    </field>
+                    <!-- .Heading -->
+
+                    <!-- Subheading -->
+                    <field
+                        id="item1_text"
+                        translate="label"
+                        type="text"
+                        sortOrder="20"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>Text</label>
+                    </field>
+                    <!-- .Subheading -->
+
+                    <!-- URL -->
+                    <field
+                        id="item1_url"
+                        translate="label"
+                        type="text"
+                        sortOrder="30"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>URL</label>
+                    </field>
+                    <!-- .URL -->
+
+                    <!-- Button Text -->
+                    <field
+                        id="item1_cta"
+                        translate="label"
+                        type="text"
+                        sortOrder="40"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>CTA Text</label>
+                    </field>
+                    <!-- .Button Text -->
+
+                    <!-- Image -->
+                    <field
+                        id="item1_image"
+                        translate="label"
+                        type="image"
+                        sortOrder="50"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media">hero_carousel</upload_dir>
+                        <base_url type="media">hero_carousel</base_url>
+                    </field>
+                    <!-- .Image -->
+                </group>
+                <!-- .Item 1 -->
+
+                <!-- Item 2 -->
+                <group id="item2"
+                       translate="label"
+                       sortOrder="10"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Item 2</label>
+                    
+                    <!-- Heading -->
+                    <field
+                        id="item2_heading"
+                        translate="label"
+                        type="text"
+                        sortOrder="10"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>Heading</label>
+                    </field>
+                    <!-- .Heading -->
+
+                    <!-- Text -->
+                    <field
+                        id="item2_text"
+                        translate="label"
+                        type="text"
+                        sortOrder="20"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>Text</label>
+                    </field>
+                    <!-- .Text -->
+
+                    <!-- URL -->
+                    <field
+                        id="item2_url"
+                        translate="label"
+                        type="text"
+                        sortOrder="30"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>URL</label>
+                    </field>
+                    <!-- .URL -->
+
+                    <!-- Button Text -->
+                    <field
+                        id="item2_cta"
+                        translate="label"
+                        type="text"
+                        sortOrder="40"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>CTA Text</label>
+                    </field>
+                    <!-- .Button Text -->
+
+                    <!-- Image -->
+                    <field
+                        id="item2_image"
+                        translate="label"
+                        type="image"
+                        sortOrder="50"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media">hero_carousel</upload_dir>
+                        <base_url type="media">hero_carousel</base_url>
+                    </field>
+                    <!-- .Image -->
+                </group>
+                <!-- .Item 2 -->
+
+                <!-- Item 3 -->
+                <group id="item3"
+                       translate="label"
+                       sortOrder="30"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Item 3</label>
+                    
+                    <!-- Heading -->
+                    <field
+                        id="item3_heading"
+                        translate="label"
+                        type="text"
+                        sortOrder="10"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>Heading</label>
+                    </field>
+                    <!-- .Heading -->
+
+                    <!-- Text -->
+                    <field
+                        id="item3_text"
+                        translate="label"
+                        type="text"
+                        sortOrder="20"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>Text</label>
+                    </field>
+                    <!-- .Text -->
+
+                    <!-- URL -->
+                    <field
+                        id="item3_url"
+                        translate="label"
+                        type="text"
+                        sortOrder="30"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>URL</label>
+                    </field>
+                    <!-- .URL -->
+
+                    <!-- Button Text -->
+                    <field
+                        id="item3_cta"
+                        translate="label"
+                        type="text"
+                        sortOrder="40"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>CTA Text</label>
+                    </field>
+                    <!-- .Button Text -->
+
+                    <!-- Image -->
+                    <field
+                        id="item3_image"
+                        translate="label"
+                        type="image"
+                        sortOrder="50"
+                        showInDefault="1"
+                        showInWebsite="1"
+                        showInStore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media">hero_carousel</upload_dir>
+                        <base_url type="media">hero_carousel</base_url>
+                    </field>
+                    <!-- .Image -->
+                </group>
+                <!-- .Item 3 -->
+            </group>
+            <!-- .Items -->
+        </section>
+    </system>
+</config>

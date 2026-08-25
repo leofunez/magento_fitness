@@ -1,0 +1,50 @@
+<?php
+    /** @var \Custom\ProductList\Block\ProductList $block */
+    $categoryId   = (int)($block->getCategoryId() ?? 0);
+?>
+
+<div class="toolbar">
+    <div class="toolbar__modes">
+        <button class="toolbar__mode toolbar__mode-grid active"></button>
+        <button class="toolbar__mode toolbar__mode-list"></button>
+    </div>
+
+    <div class="toolbar__amount"></div>
+
+    <div class="toolbar__sorter">
+        <label class="toolbar__sorter-label" for="sorter">
+            <?= __('Sort By') ?>
+        </label>
+        <select data-role="sorter" class="toolbar__order">
+            <option value="name" selected="selected">
+                <?= __('Name') ?>
+            </option>
+            <option value="price">
+                <?= __('Price') ?>
+            </option>
+            <option value="position">
+                <?= __('Position') ?>
+            </option>
+        </select>
+        <button class="toolbar__direction" data-role="direction-switcher"></button>
+    </div>
+</div>
+
+<div class="product-list" id="product-list"></div>
+
+<div class="product-list__footer">
+    <button class="button product-list__load-more"
+            data-mage-init='{
+                "Custom_ProductList/js/load-more": {
+                    "url": "<?= $block->getUrl('productlist/ajax/load') ?>",
+                    "container": "#product-list",
+                    "category_id": <?= $categoryId ?>
+                }
+            }'>
+        <?= __('Load More') ?>
+    </button>
+
+    <p class="product-list__no-more">
+        <?= __('No more products!') ?>
+    </p>
+</div>

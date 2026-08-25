@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block
+                class="Custom\ShoppingCart\Block\ShoppingCart"
+                name="shopping.cart"
+                template="Custom_ShoppingCart::shopping-cart.phtml"
+                before="-"
+            />
+        </referenceContainer>
+
+        <move element="checkout.cart.totals" destination="shopping.cart" as="shopping_summary_totals" />
+        <move element="checkout.cart.totals.wrapper" destination="shopping.cart" as="shopping_summary_totals_wrapper" />
+        <move element="checkout.cart.shipping" destination="shopping.cart" as="shopping_summary_shipping" />
+        <move element="checkout.cart.coupon" destination="shopping.cart" as="shopping_summary_coupon" />
+        <move element="checkout.cart.methods" destination="shopping.cart" as="shopping_summary_methods" />
+        <move element="checkout.cart.methods.onepage" destination="shopping.cart" as="shopping_summary_methods_onepage" />
+
+        <referenceBlock name="page.main.title" remove="true" />
+        <referenceBlock name="checkout.cart.form" remove="true" />
+        <referenceBlock name="checkout.cart.empty" remove="true" />
+        <referenceBlock name="cart.summary" remove="true" />
+
+        <!-- More Choices -->
+            <referenceBlock name="checkout.cart.crosssell" remove="true" />
+
+            <referenceContainer name="checkout.cart.summary">
+                <block class="Custom\MoreChoices\Block\MoreChoices"
+                    name="custom.more.choices"
+                    template="Custom_MoreChoices::more-choices.phtml" />
+            </referenceContainer>
+
+            <move element="custom.more.choices" destination="shopping.cart" as="shopping_more_choices" />
+        <!-- .More Choices -->
+    </body>
+</page>

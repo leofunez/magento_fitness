@@ -1,0 +1,29 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Cms\Block\Block             $cmsBlock
+ *
+ * This template handles the dynamic rendering of the header elements
+ * in a Magento 2 context, relying on specific blocks and view models.
+ */
+
+  $logo = $block->getViewFileUrl('images/logo.png');
+?>
+
+<div class="header__sticky-container">
+    <a class="header__sticky-logo" href="/">
+        <img src="<?= $block->escapeUrl($logo); ?>" alt="PSE&G" />
+    </a>
+    
+    <div class="header__sticky-nav">
+        <?php
+            echo $block->getChildHtml('catalog.topnav.secondary');
+        ?>
+    </div>
+
+    <div class="header__sticky-cart">
+        <?php
+            echo $block->getChildHtml('minicart.secondary');
+        ?>
+    </div>
+</div>

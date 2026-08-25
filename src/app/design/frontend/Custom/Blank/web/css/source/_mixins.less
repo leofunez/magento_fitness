@@ -1,0 +1,112 @@
+@import "./_colors.less";
+
+// Fonts
+@OutFit-Font: 'Outfit', 'sans-serif';
+@Roboto-Font: 'Roboto', 'sans-serif';
+@size-font: 16px;
+@weight-font: 500;
+@color-font: @DARK;
+
+.mainFontMixin(@size: @size-font, @weight: @weight-font, @color: @color-font) {
+    font-family: @OutFit-Font;
+    font-size: @size;
+    font-weight: @weight;
+    color: @color;
+}
+
+.secondaryFontMixin(@size: @size-font, @weight: @weight-font, @color: @color-font) {
+    font-family: @Roboto-Font;
+    font-size: @size;
+    font-weight: @weight;
+    color: @color;
+}
+
+.blockTitleMixin() {
+    .mainFontMixin(20px, 500, @DARK);
+    border-bottom: 1px solid @BORDER_LIGHT;
+    padding-bottom: 10px;
+
+    strong {
+        font-size: inherit;
+        font-weight: inherit;
+    }
+}
+// .Fonts
+
+// Button
+.mainButtonMixin() {
+    .mainFontMixin(14px, 500, @WHITE);
+    color: @WHITE;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: @DARK;
+    border-color: @DARK;
+    padding: 15px 35px;
+    max-width: max-content;
+    display: block;
+    border-radius: 0;
+
+    // Clipping corners
+    clip-path: polygon(15px 0%, 100% 0, 100% 50px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 8px 100%, 0 100%, 0 15px);
+
+    &:hover {
+        background-color: @BLUE_DARKER;
+        border-color: @BLUE_DARKER;
+        color: @WHITE;
+    }
+
+    &:focus,
+    &:active {
+        background-color: @DARK;
+        border-color: @DARK;
+        color: @WHITE;
+    }
+
+    &[disabled] {
+        opacity: 0.5;
+        cursor: default;
+    }
+}
+
+.secondaryButtonMixin() {
+    .mainButtonMixin();
+
+    background-color: @ORANGE;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: @ORANGE_DARK;
+        border-color: @ORANGE_DARK;
+    }
+}
+
+.smallButtonMixin() {
+    .mainButtonMixin();
+
+    font-size: 12px;
+    padding: 15px 20px;
+}
+
+.largeButtonMixin() {
+    .mainButtonMixin();
+
+    font-size: 16px;
+    padding: 15px 20px;
+}
+
+.grayButtonMixin() {
+    .mainFontMixin(12px, 500, @DARK);
+    background-color: @GREY_LIGHTER;
+    border-color: @GREY_LIGHTER;
+    border-radius: 4px;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: @BORDER_INPUT;
+        border-color: @BORDER_INPUT;
+        color: @DARK;
+    }
+}
+// .Button

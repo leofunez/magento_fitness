@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<page layout="2columns-left" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <container name="product.detail.wrapper" htmlTag="div" htmlClass="wrapper" before="-" />
+        </referenceContainer>
+
+        <container name="product.detail.content" htmlTag="div" htmlClass="product-detail__wrapper" before="-" />
+        <referenceContainer name="product.detail.content">
+            <block
+                name="product.detail"
+                class="Magento\Framework\View\Element\Template"
+                template="Magento_Catalog::product/product-detail.phtml"
+                before="-"
+            />
+        </referenceContainer>
+        <move element="product.detail.content" destination="product.detail.wrapper" />
+
+        <!-- Aside -->
+            <referenceContainer name="sidebar.main">
+                <block class="Custom\FeaturedCategories\Block\FeaturedCategories"
+                        name="featured.categories"
+                        template="Custom_FeaturedCategories::featured-categories-sidebar.phtml"
+                />
+            </referenceContainer>
+            <move element="featured.categories" destination="product.detail" as="sidebar_categories"/>
+            <move element="sidebar.main" destination="product.detail" as="sidebar_main" />
+            <move element="sidebar.additional" destination="product.detail" as="sidebar_additional" />
+        <!-- .Aside -->
+
+        <!-- Top -->
+            <!-- Images -->
+            <move element="product.info.media" destination="product.detail" as="product_media" />
+            <!-- .Images -->
+            
+            <!-- Info -->
+                <move element="page.main.title" destination="product.detail" as="product_title" />
+
+                <!-- Reviews -->
+                <move element="product.info.review" destination="product.detail" as="product_review" />
+                <!-- .Reviews -->
+
+                <!-- SKU -->
+                <move element="product.info.sku" destination="product.detail" as="product_sku" />
+                <!-- .SKU -->
+
+                <!-- Price -->
+                <move element="product.info.price" destination="product.detail" as="product_stock" />
+                <move element="product.price.final" destination="product.detail" as="product_price" />
+                <!-- .Price -->
+
+                <!-- Wishlist -->
+                <move element="view.addto.wishlist" destination="product.detail" as="product_wishlist" />
+                <!-- .Wishlist -->
+
+                <!-- Add to compare -->
+                <move element="view.addto.compare" destination="product.detail" as="product_compare"/>
+                <referenceBlock name="catalog.compare.link" remove="true"/>
+                <!-- .Add to compare -->
+            
+                <!-- Form -->
+                    <referenceBlock name="product.info.addtocart.additional" remove="true"/>
+                    <referenceContainer name="product.info.form.content">
+                        <referenceBlock name="product.info.addtocart">
+                            <action method="setTemplate">
+                                <argument name="template" xsi:type="string">
+                                    Magento_Catalog::product/product-detail-form.phtml
+                                </argument>
+                            </action>
+                        </referenceBlock>
+                    </referenceContainer>
+
+                    <!-- Options -->
+                    <move element="product.info.options.wrapper" destination="product.info.addtocart" as="product_options" />
+                    <!-- .Options -->
+
+                    <!-- Add to cart -->
+                    <move element="product.info.addtocart" destination="product.detail" as="product_form" />
+                    <!-- .Add to cart -->
+                <!-- .Form -->
+            <!-- .Info -->
+            
+            <!-- Description -->
+            <move element="product.info.details" destination="product.detail" as="product_description"/>
+            <!-- .Description -->
+        <!-- .Top -->
+
+        <!-- Bottom -->
+            <!-- Related -->
+            <referenceBlock name="catalog.product.related" remove="true" />
+            <referenceContainer name="catalog.product.related">
+                <block
+                    name="product.related"
+                    class="Custom\RelatedProducts\Block\RelatedProducts"
+                    template="Custom_RelatedProducts::related-products.phtml"
+                    before="-"
+                />
+            </referenceContainer>
+            <move element="product.related" destination="product.detail" as="product_related"/>
+            <!-- .Related -->
+
+            <!-- Upsell -->
+            <referenceBlock name="product.info.upsell" remove="true" />
+            <referenceContainer name="catalog.product.upsell">
+                <block
+                    name="product.upsell"
+                    class="Custom\UpsellProducts\Block\UpsellProducts"
+                    template="Custom_UpsellProducts::upsell-products-sidebar.phtml"
+                />
+            </referenceContainer>
+            <move element="product.upsell" destination="product.detail" as="product_upsell_sidebar"/>
+            <!--
+            <referenceContainer name="catalog.product.upsell">
+                <block
+                    name="product.upsell"
+                    class="Custom\UpsellProducts\Block\UpsellProducts"
+                    template="Custom_UpsellProducts::upsell-products.phtml"
+                    before="-"
+                />
+            </referenceContainer>
+            <move element="product.upsell" destination="product.detail" as="product_upsell"/>
+            -->
+            <!-- .Upsell -->
+
+            <!-- Latest -->
+            <referenceContainer name="content">
+                <block
+                    class="Custom\LatestProducts\Block\LatestProducts"
+                    name="last.products.productpage"
+                    template="Custom_LatestProducts::latest-products.phtml"
+                />
+            </referenceContainer>
+            <move element="last.products.productpage" destination="product.detail" as="product_last"/>
+            <!-- .Latest -->
+        <!-- .Bottom -->
+    </body>
+</page>

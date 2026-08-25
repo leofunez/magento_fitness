@@ -1,0 +1,249 @@
+<?php
+/** @var \Custom\ShoppingCart\Block\ShoppingCart $block */
+
+$_products = $block->getProducts();
+$_moreChoices = $block->getMoreChoices();
+$_summary  = $block->getSummary();
+?>
+
+<?= $block->getChildHtml('breadcrumbs'); ?>
+
+<div class="page__content">
+    <div class="wrapper">
+        <h1 class="page__title">
+            <?= __('Shopping Cart') ?>
+        </h1>
+
+        <?php if (count($_products) > 0): ?>
+            <div class="shopping">
+                <div class="shopping__table">
+                    <form action="<?= $block->getUrl('checkout/cart/updatePost') ?>"
+                          method="post"
+                          id="form-validate"
+                          class="form form-cart"
+                          data-mage-init='{"validation": {}}'
+                    >
+                        <?= $block->getBlockHtml('formkey') ?>
+
+                        <table>
+                            <thead class="shopping__head">
+                                <tr>
+                                    <th class="shopping__col-info">
+                                        <?= __('Item') ?>
+                                    </th>
+                                    <th class="shopping__col-price">
+                                        <?= __('Price') ?>
+                                    </th>
+                                    <th class="shopping__col-quantity">
+                                        <?= __('Quantity') ?>
+                                    </th>
+                                    <th class="shopping__col-total">
+                                        <?= __('Subtotal') ?>
+                                    </th>
+                                    <th class="shopping__col-actions"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="shopping__body">
+                                <?php foreach ($_products as $_product): ?>
+                                    <!-- Item/Row -->
+                                        <?php
+                                            $_id = (int) $_product->getId();
+                                            $_url = $block->getProductUrl($_product);
+                                            $_name = $_product['name'];
+                                            $_image = $block->getItemImage($_product);
+                                            $_options = $block->getItemOptions($_product);
+                                            $_options_attributes = !empty($_options['attributes']) ? $_options['attributes'] : NULL;
+                                            $_options_custom = !empty($_options['custom_options']) ? $_options['custom_options'] : NULL;
+                                            
+                                            $_originalPrice = $block->getOriginalPrice($_product);
+                                            $_finalPrice = $block->getFinalPrice($_product);
+                                            $_total = $block->formatPrice($_product['row_total']);
+                                            
+                                            $_quantity = (int) $_product['qty'];
+                                            $_editUrl = $block->getItemEditUrl($_product);
+                                            $_removeUrl = $block->getItemRemoveUrl($_product);
+                                        ?>
+
+                                        <tr class="shopping__row">
+                                            <!-- Info -->
+                                            <td class="shopping__col-info">
+                                                <div class="shopping__info">
+                                                    <!-- Image -->
+                                                    <?php if($_image): ?>
+                                                        <a href="<?= $_url ?>" target="_blank" title="<?= $_name ?>">
+                                                            <img class="shopping__image" src="<?= $_image ?>" alt="<?= $_name ?>" />
+                                                        </a>
+                                                    <?php endif; ?>
+                                                    <!-- .Image -->
+                                                    
+                                                    <!-- Text -->
+                                                    <div class="shopping__text">
+                                                        <!-- Name -->
+                                                        <?php if($_name): ?>
+                                                            <h2 class="shopping__name">
+                                                                <a href="<?= $_url ?>" target="_blank" title="<?= $_name ?>">
+                                                                    <?= $_name ?>
+                                                                </a>
+                                                            </h2>
+                                                        <?php endif; ?>
+                                                        <!-- .Name -->
+                                                        
+                                                        <!-- Options -->
+                                                            <!-- Attributes -->
+                                                                <?php if($_options_attributes): ?>
+                                                                    <div class="shopping__options">
+                                                                        <?php foreach($_options_attributes as $option): ?>
+                                                                            <div class="shopping__option">
+                                                                                <span class="shopping__option-label">
+                                                                                    <?= $option['label'] ?>:
+                                                                                </span>
+                                                                                <?= $option['value'] ?>
+                                                                            </div>
+                                                                        <?php endforeach; ?>
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                            <!-- .Attributes -->
+                                                            
+                                                            <!-- Custom -->
+                                                                <?php if($_options_custom): ?>
+                                                                    <div class="shopping__options">
+                                                                        <?php foreach($_options_custom as $option): ?>
+                                                                            <div class="shopping__option">
+                                                                                <span class="shopping__option-label">
+                                                                                    <?= $option['label'] ?>:
+                                                                                </span>
+                                                                                <?= $option['value'] ?>
+                                                                            </div>
+                                                                        <?php endforeach; ?>
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                            <!-- .Custom -->
+                                                        <!-- .Options -->
+                                                    </div>
+                                                    <!-- .Text -->
+                                                </div>
+                                            </td>
+                                            <!-- .Info -->
+
+                                            <!-- Price -->
+                                            <td class="shopping__col-price">
+                                                <div class="shopping__price">
+                                                    <?php if($_originalPrice > $_finalPrice): ?>
+                                                        <p class="shopping__price-full">
+                                                            <?= __('Full price:') ?>
+                                                            <?= $block->formatPrice($_originalPrice) ?>
+                                                        </p>
+                                                    <?php endif; ?>
+                                                    
+                                                    <p class="shopping__price-final">
+                                                        <?php if($_originalPrice > $_finalPrice): ?>
+                                                            <span class="shopping__price-fire"></span>
+                                                        <?php endif; ?>
+
+                                                        <?= $block->formatPrice($_finalPrice) ?>
+                                                    </p>
+                                                </div>
+                                            </td>
+                                            <!-- .Price -->
+
+                                            <!-- Quantity -->
+                                            <td class="shopping__col-quantity">
+                                                <div class="shopping__quantity">
+                                                    <div class="quantity">
+                                                        <div class="quantity__control">
+                                                            <button type="button" class="quantity__button decrement">-</button>
+                                                            <input type="number"
+                                                                    name="cart[<?= $_id ?>][qty]"
+                                                                    value="<?= $_quantity ?>"
+                                                                    min="1"
+                                                                    step="1"
+                                                                    class="quantity__input qty"
+                                                                    data-cart-item-id="<?= $_id ?>"
+                                                                    data-item-qty="<?= $_quantity ?>"
+                                                                    data-role="cart-item-qty"
+                                                                    data-validate='{"required-number": true, "validate-greater-than-zero": true}'
+                                                            />
+                                                            <button type="button" class="quantity__button increment">+</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- .Quantity -->
+
+                                            <!-- Total -->
+                                            <td class="shopping__col-total">
+                                                <div class="shopping__total">
+                                                    <?= $_total ?>
+                                                </div>
+                                            </td>
+                                            <!-- .Total -->
+
+                                            <!-- Actions -->
+                                            <td class="shopping__col-actions">
+                                                <div class="shopping__actions">
+                                                    <a href="<?= $_editUrl ?>" class="shopping__action edit">
+                                                        <?= __('Edit') ?>
+                                                    </a>
+
+                                                    <form method="post" action="<?= __($_removeUrl) ?>">
+                                                        <?= $block->getBlockHtml('formkey') ?>
+                                                        <button
+                                                            type="submit"
+                                                            title="<?= __('Remove item') ?>"
+                                                            class="shopping__action remove"
+                                                        >
+                                                            <?= __('Remove') ?>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                            <!-- .Actions -->
+                                        </tr>
+                                    <!-- .Item/Row -->
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+
+                        <div class="shopping__actions-bottom">
+                            <a href="/" class="button button__gray is-shopping">
+                                <?= __('Continue Shopping') ?>
+                            </a>
+
+                            <button type="submit"
+                                    name="update_cart_action"
+                                    class="button button__gray is-update"
+                                    value="update_qty"
+                            >
+                                <?= __('Update Shopping Cart') ?>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="shopping__summary">
+                    <h2 class="shopping__summary-title">
+                        <?= __('Summary') ?>
+                    </h2>
+                    
+                    <?= $block->getChildHtml('shopping_summary_totals_wrapper') ?>
+                    <?= $block->getChildHtml('shopping_summary_shipping') ?>
+                    <?= $block->getChildHtml('shopping_summary_coupon') ?>
+                    <?= $block->getChildHtml('shopping_summary_totals') ?>
+                    <?= $block->getChildHtml('shopping_summary_methods') ?>
+                    <?= $block->getChildHtml('shopping_summary_methods_onepage') ?>
+                </div>
+            </div>
+            
+            <?php echo $block->getChildHtml('shopping_more_choices'); ?>
+        <?php else: ?>
+            <p>
+                <?= __('You have no items in your shopping cart.') ?>
+            </p>
+            <p>
+                <?= __('Click ') ?>
+                <a href="/"><?= __('here') ?></a>
+                <?= __(' to continue shopping') ?>
+            </p>
+        <?php endif; ?>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<?php
+/**
+ * @var \Magento\Checkout\Block\Cart\Sidebar $block
+ * @var \Magento\Framework\Escaper $escaper
+ *
+ * This template renders the second instance of the dynamic Minicart.
+ */
+?>
+<div data-block="minicart-secondary" class="minicart-wrapper secondary-cart">
+    
+    <a class="action showcart secondary-showcart" 
+       href="<?= $escaper->escapeUrl($block->getShoppingCartUrl()); ?>"
+       data-bind="scope: 'minicart_secondary_content'">
+        
+        <!-- <span class="counter qty" 
+              data-bind="css: { empty: !!getCartLineItemsCount() == false }, 
+                         attr: { title: $t('Items in Secondary Cart') }">
+            <span class="counter-number">
+                <span data-bind="text: getCartLineItemsCount()"></span>
+            </span>
+        </span> -->
+    </a>
+
+    <div class="block block-minicart secondary-dropdown" 
+         data-role="dropdownDialog" 
+         data-mage-init='{"dropdownDialog":{
+             "appendTo":"[data-block=minicart-secondary]",
+             "triggerTarget":".secondary-showcart",
+             "closeOnMouseLeave": false,
+             "closeOnEscape": true,
+             "triggerClass":"active",
+             "parentClass":"active",
+             "buttons":[]
+         }}'>
+
+        <div id="minicart-secondary-content-wrapper" 
+             data-bind="scope: 'minicart_secondary_content'">
+            
+            <?= $block->getChildHtml('content'); ?>
+            
+            <script type="text/x-magento-init">
+            {
+                "[data-block='minicart-secondary']": {
+                    "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+                }
+            }
+            </script>
+        </div>
+    </div>
+</div>

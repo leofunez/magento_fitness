@@ -1,0 +1,122 @@
+<?php
+/** @var \Custom\FeaturedCategories\Block\FeaturedCategories $block */
+
+/*
+Women: 20
+-> Tops: 21
+->-> Jackets: 21
+->-> Hoodies: 24
+->-> Tees: 25
+->-> Bras & Tanks: 26
+-> Bottom: 22
+->-> Pants: 27
+->-> Shorts: 28
+
+Men: 11
+-> Top: 12
+->-> Jackets: 14
+->-> Hoodies: 15
+->-> Tees: 16
+->-> Tanks: 17
+-> Bottom: 13
+->-> Pants: 18
+->-> Shorts: 19
+
+Gear: 3
+-> Bags: 4
+-> Fitness Equipment: 5
+-> Watches: 6
+*/
+$categoryIds = [
+    20, // Women
+    12, // Men - Top
+    14, // Men - Jackets
+    28, // Shorts
+    3   // Gear
+];
+$_categories = $block->getCategories($categoryIds);
+
+// Check if the categories data is available
+if ($_categories && $_categories->getSize()): ?>
+    <!-- data-mage-init='{"js/sliders/categories-slider": {}}' -->
+    <section class="categories-slider">
+        <h2 class="block-featured__title">
+            <span class="block-featured__title-span">
+                <?= __('Categories'); ?>
+            </span>
+        </h2>
+
+        <div class="categories-slider__slick">
+            <?php foreach ($_categories as $_category): ?>
+                <?php
+                    $categoryName = __($_category->getName());
+                    $categoryUrl = __($_category->getUrl());
+                    $categoryImageUrl = $block->getImageUrl($_category);
+                ?>
+
+                <?php if ($categoryImageUrl): ?>
+                    <article class="categories-slider__item" style="background-image: url(<?= $block->escapeUrl($categoryImageUrl) ?>);">
+                        <img class="categories-slider__image" src="<?= __($categoryImageUrl); ?>" />
+                        
+                        <?php if($categoryName): ?>
+                            <div class="categories-slider__info">
+                                <h3 class="categories-slider__name">
+                                    <?= $categoryName; ?>
+                                </h3>
+
+                                <a class="button button__secondary" href="<?= $categoryUrl; ?>">
+                                    <?= __('Shop Now'); ?>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                    </article>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    </section>
+<?php endif; ?>
+
+<script type="text/javascript">
+    require(['jquery', 'slick'], function($){
+        $('.categories-slider__slick')
+        .slick({
+            centerMode: true,
+            arrows: false,
+            lazyLoad: 'ondemand',
+            centerPadding: '100px',
+            dots: true,
+            autoplay: false,
+            autoplaySpeed: 3000,
+            slidesToShow: 1,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 1
+                    }
+                },
+                {
+                    breakpoint: 580,
+                    settings: {
+                        arrows: false,
+                        centerMode: false,
+                        centerPadding: '10px',
+                        slidesToShow: 1
+                    }
+                }
+            ],
+            customPaging: function(slider, i) {
+                var currentItem = $(slider.$slides[i])
+                var currentTitle = currentItem.find('.categories-slider__name').text();
+                return `<button type='button' class='categories-slider__tab'>${currentTitle}</button>`;
+            }
+        })
+        .on('init', function(event, slick) {
+            console.log(slick);
+            $(slick.$dots).addClass('categories-slider__tabs').removeClass('slick-dots');
+        });
+    });
+</script>

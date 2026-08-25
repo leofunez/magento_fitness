@@ -1,0 +1,41 @@
+<?php
+/** @var \Custom\UpsellProducts\Block $block */
+
+$_products = $block->getUpsellProducts();
+
+if (count($_products)): ?>
+    <div class="block">
+        <h2 class="block-title">
+            <?= __('Upsell products') ?>
+        </h2>
+
+        <div class="block-cards__slick slick--is-small">
+            <?php foreach ($_products as $_product): ?>
+                <?php
+                    $_id = $_product->getId();
+                    $_productCard = $block->getProductCard($_id);
+
+                    if ($_productCard) {
+                        echo $_productCard;
+                    }
+                ?>
+            <?php endforeach ;?>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        require(['jquery', 'slick'], function($){
+            $('.block-cards__slick')
+            .slick({
+                centerMode: true,
+                arrows: true,
+                lazyLoad: 'ondemand',
+                centerPadding: '0',
+                dots: true,
+                autoplay: false,
+                autoplaySpeed: 3000,
+                slidesToShow: 1
+            });
+        });
+    </script>
+<?php endif; ?>

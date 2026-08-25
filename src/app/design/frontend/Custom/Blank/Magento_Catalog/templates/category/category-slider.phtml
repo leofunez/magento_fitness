@@ -1,0 +1,135 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Custom\Module\ViewModel\CategoryData $categoryViewModel
+ */
+
+// 💡 Retrieve the ViewModel instance
+$categoryViewModel = $block->getData('category_data_provider');
+
+/*
+Women: 20
+-> Tops: 21
+->-> Jackets: 21
+->-> Hoodies: 24
+->-> Tees: 25
+->-> Bras & Tanks: 26
+-> Bottom: 22
+->-> Pants: 27
+->-> Shorts: 28
+
+Men: 11
+-> Top: 12
+->-> Jackets: 14
+->-> Hoodies: 15
+->-> Tees: 16
+->-> Tanks: 17
+-> Bottom: 13
+->-> Pants: 18
+->-> Shorts: 19
+
+Gear: 3
+-> Bags: 4
+-> Fitness Equipment: 5
+-> Watches: 6
+*/
+$categoryIds = [20, 12, 14, 28, 3];
+
+// 💡 Call the method to get the categories
+$_categories = $categoryViewModel ? $categoryViewModel->getCategories($categoryIds) : null;
+
+// 5. Check if the categories data is available
+if ($_categories && $_categories->getSize()): ?>
+    <!-- data-mage-init='{"js/sliders/categories-slider": {}}' -->
+    <section class="categories-slider">
+        <?php
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $storeManager = $objectManager->get(\Magento\Store\Model\StoreManagerInterface::class);
+            $mediaBaseUrl = $storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+        ?>
+
+        <h2 class="block-featured__title">
+            <span class="block-featured__title-span">
+                <?= __('Categories'); ?>
+            </span>
+        </h2>
+
+        <div class="categories-slider__slick">
+            <?php foreach ($_categories as $_category): ?>
+                <?php
+                    // print_r($_category);
+                    $categoryName = $block->escapeHtml($_category->getName());
+                    $categoryUrl = $block->escapeUrl($_category->getUrl());
+                    $categoryImageUrl = '';
+                    
+                    if($_category->getImage()) {
+                        $categoryImageUrl = $mediaBaseUrl . str_replace('/media/', '' , $_category->getImage());
+                    }
+                ?>
+
+                <?php if ($categoryImageUrl): ?>
+                    <article class="categories-slider__item" style="background-image: url(<?= $block->escapeUrl($categoryImageUrl) ?>);">
+                        <img class="categories-slider__image" src="<?= $block->escapeUrl($categoryImageUrl); ?>" />
+                        
+                        <?php if($categoryName): ?>
+                            <div class="categories-slider__info">
+                                <h3 class="categories-slider__name">
+                                    <?= $categoryName; ?>
+                                </h3>
+
+                                <a class="button button__secondary" href="<?= $categoryUrl; ?>">
+                                    <?= __('Shop Now'); ?>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                    </article>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    </section>
+<?php endif; ?>
+
+<script type="text/javascript">
+    require(['jquery', 'slick'], function($){
+        $('.categories-slider__slick')
+        .slick({
+            centerMode: true,
+            arrows: false,
+            lazyLoad: 'ondemand',
+            centerPadding: '100px',
+            dots: true,
+            autoplay: false,
+            autoplaySpeed: 3000,
+            slidesToShow: 1,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 1
+                    }
+                },
+                {
+                    breakpoint: 580,
+                    settings: {
+                        arrows: false,
+                        centerMode: false,
+                        centerPadding: '10px',
+                        slidesToShow: 1
+                    }
+                }
+            ],
+            customPaging: function(slider, i) {
+                var currentItem = $(slider.$slides[i])
+                var currentTitle = currentItem.find('.categories-slider__name').text();
+                return `<button type='button' class='categories-slider__tab'>${currentTitle}</button>`;
+            }
+        })
+        .on('init', function(event, slick) {
+            console.log(slick);
+            $(slick.$dots).addClass('categories-slider__tabs').removeClass('slick-dots');
+        });
+    });
+</script>

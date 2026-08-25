@@ -1,0 +1,27 @@
+<?php
+/** @var \Custom\LatestProducts\Block\LatestProducts $block */
+
+$_productCollection = $block->getLatestProducts(4);
+
+if (count($_productCollection) > 0): ?>
+<section class="section__content">
+    <div class="block__card-list">
+        <h2 class="block__title">
+            <?= __('Latest Products') ?>
+        </h2>
+
+        <div class="product-list">
+            <?php foreach ($_productCollection as $_product): ?>
+                <?php
+                    $_id = $_product->getId();
+                    $_productCard = $block->getProductCard($_id);
+
+                    if($_productCard): ?>
+                        <?= $_productCard; ?>
+                    <?php endif;
+                ?>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<page
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+    layout="1column"
+>
+    <body>
+        <!-- <referenceBlock name="category.products.list">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">
+                    Magento_Catalog::category/category.phtml
+                </argument>
+            </action>
+        </referenceBlock> -->
+        <referenceBlock name="category.products.list" remove="true" />
+
+        <referenceContainer name="content">
+            <block
+                name="category.content"
+                class="Custom\Category\Block\Category"
+                template="Custom_Category::category.phtml"
+                before="-"
+            >
+                <block
+                    name="ajax_product_list"
+                    class="Custom\ProductList\Block\ProductList"
+                    template="Custom_ProductList::product-list.phtml"
+                />
+            </block>
+        </referenceContainer>
+
+        <move element="category.image" destination="category.content" as="image" before="-" />
+        <move element="sidebar.main" destination="category.content" as="sidebar_main" before="-" />
+        <move element="sidebar.additional" destination="category.content" as="sidebar_additional" before="-" />
+        <move element="page.main.title" destination="category.content" as="category_name" before="-" />
+        <move element="product_list_toolbar" destination="category.content" as="toolbar" before="page.main.title" />
+    </body>
+</page>

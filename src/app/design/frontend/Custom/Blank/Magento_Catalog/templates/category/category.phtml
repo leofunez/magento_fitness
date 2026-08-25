@@ -1,0 +1,93 @@
+<?php
+/** @var \Magento\Catalog\Block\Product\ListProduct $block */
+
+$_productCollection = $block->getLoadedProductCollection();
+$_helper = $block->getHelper('Magento\Catalog\Helper\Output');
+$categoryName = strip_tags($block->getChildHtml('category_name'));
+?>
+
+<div class="page__content">
+    <div class="wrapper">
+        <div class="category">
+            <?php if ($_productCollection->getSize()): ?>
+                <aside class="category__aside">
+                    <?php if($block->getChildHtml('sidebar_main')): ?>
+                        <?= $block->getChildHtml('sidebar_main'); ?>
+                    <?php endif; ?>
+                    
+                    <?php if($block->getChildHtml('sidebar_additional')): ?>
+                        <?= $block->getChildHtml('sidebar_additional'); ?>
+                    <?php endif; ?>
+                </aside>
+                
+                <div class="category__products">
+                    <?php if($block->escapeHtml($categoryName)): ?>
+                        <h1 class="page__title">
+                            <?= $block->escapeHtml($categoryName); ?>
+                        </h1>
+                    <?php endif; ?>
+
+                    <?php if ($block->getChildHtml('image')): ?>
+                        <div class="category__image">
+                            <?= $block->getChildHtml('image'); ?>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <?php if($block->getChildHtml('toolbar')): ?>
+                        <div class="category__toolbar">
+                            <?= $block->getChildHtml('toolbar'); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="product-list">
+                        <?php foreach ($_productCollection as $_product): ?>
+                            <div class="product-card">
+                                <?php if($block->getImage($_product, 'product_base_image')->getImageUrl()): ?>
+                                    <a class="product-card__photo-add" href="<?= $_product->getProductUrl() ?>">
+                                        <img class="product-card__image" src="<?= $block->getImage($_product, 'product_base_image')->getImageUrl(); ?>"
+                                            alt="<?= $block->escapeHtml($_product->getName()) ?>"
+                                        />
+
+                                        <button class="button button__primary button--is-small">
+                                            <?= $block->escapeHtml(__('View Product')) ?>
+                                        </button>
+                                    </a>
+                                <?php endif; ?>
+
+                                <div class="product-card__reviews">
+                                    <?php
+                                        $reviewSummaryHtml = $block->getReviewsSummaryHtml($_product, 'short', false);
+                                        
+                                        if($reviewSummaryHtml) {
+                                            echo $reviewSummaryHtml;
+                                        } else {
+                                            echo "<p class='no-reviews'>No Reviews</p>";
+                                        }
+                                    ?>
+                                </div>
+                                
+                                <?php if($block->escapeHtml($_product->getName())): ?>
+                                    <div class="product-card__info">
+                                        <h2 class="product-card__name">
+                                            <a href="<?= $_product->getProductUrl() ?>">
+                                                <?= $block->escapeHtml($_product->getName()); ?>
+                                            </a>
+                                        </h2>
+
+                                        <?php if($block->getProductPrice($_product)): ?>
+                                            <span class="product-card__price">
+                                                <?= $block->getProductPrice($_product); ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div class="message info empty"><div><?= __('We can\'t find products matching the selection.') ?></div></div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<?php
+/** @var $block \Custom\HeroCarousel\Block\Carousel */
+$items = $block->getItems();
+
+if ($block->isEnabled() && !empty($items)): ?>
+    <section class="hero-carousel">
+        <?php foreach ($items as $item): ?>
+            <?php if (!empty($item['image'])): ?>
+                <?php $imageUrl = $block->getImageUrl($item['image']); ?>
+                <div class="hero-carousel__item" style="background-image: url(<?= $imageUrl ?>);">
+                    <img
+                        class="hero-carousel__image"
+                        src="<?= $imageUrl ?>" alt="<?= $block->escapeHtml($item['heading']) ?>"
+                    />
+                    <div class="hero-carousel__wrapper">
+                        <div class="hero-carousel__info">
+                            <?php if (!empty($item['heading'])): ?>
+                                <h2 class="hero-carousel__heading">
+                                    <?= $item['heading'] ?>
+                                </h2>
+                            <?php endif; ?>
+
+                            <?php if (!empty($item['text'])): ?>
+                                <p class="hero-carousel__text">
+                                    <?= $item['text'] ?>
+                                </p>
+                            <?php endif; ?>
+
+                            <?php if (!empty($item['cta'])): ?>
+                                <a class="hero-carousel__button button button__secondary" href="<?= $item['url'] ?>" class="cta-button">
+                                    <?= $item['cta'] ?>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </section>
+
+    <script type="text/javascript">
+        require(['jquery', 'slick'], function($){
+            $('.hero-carousel').slick({
+                centerMode: false,
+                lazyLoad: 'ondemand',
+                centerPadding: '0px',
+                dots: true,
+                autoplay: false,
+                autoplaySpeed: 4000,
+                slidesToShow: 1
+            });
+        });
+    </script>
+<?php endif; ?>

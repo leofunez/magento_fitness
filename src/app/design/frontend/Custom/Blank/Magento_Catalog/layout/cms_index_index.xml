@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <!-- Hero Carousel -->
+            <block
+                class="Custom\HeroCarousel\Block\HeroCarousel"
+                name="hero.carousel"
+                template="Custom_HeroCarousel::hero-carousel.phtml"
+            />
+
+            <!-- Main Wrapper -->
+            <container
+                name="main.wrapper"
+                htmlTag="div"
+                htmlClass="wrapper"
+                after="hero.carousel">
+
+                <!-- Categories -->
+                <!-- <block
+                    class="Magento\Framework\View\Element\Template"
+                    name="categories.home"
+                    template="Magento_Catalog::category/category-slider.phtml"
+                    cacheable="false">
+
+                    <arguments>
+                        <argument
+                            name="category_data_provider"
+                            xsi:type="object">
+                            Custom\Module\ViewModel\CategoryData
+                        </argument>
+                    </arguments>
+                </block> -->
+                <block class="Custom\FeaturedCategories\Block\FeaturedCategories"
+                       name="featured.categories"
+                       template="Custom_FeaturedCategories::featured-categories.phtml" />
+
+                <!-- Featured By Category -->
+                <block class="Custom\FeaturedProducts\Block\FeaturedProducts"
+                       name="featured.products_by_cat"
+                       template="Custom_FeaturedProducts::featured-products-by-cat.phtml"
+                       after="featured.categories"/>
+
+                <!-- Featured -->
+                <block class="Custom\FeaturedProducts\Block\FeaturedProducts"
+                       name="featured.products"
+                       template="Custom_FeaturedProducts::featured-products.phtml"
+                       after="categories.home"/>
+            </container>
+            <!-- .Main Wrapper -->
+        </referenceContainer>
+    </body>
+</page>

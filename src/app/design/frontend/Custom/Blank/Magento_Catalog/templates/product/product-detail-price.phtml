@@ -1,0 +1,25 @@
+
+<?php
+/** @var \Magento\Catalog\Pricing\Render $block */
+$product = $block->getSaleableItem();
+$regularPrice = $product->getPrice();
+$finalPrice   = $product->getFinalPrice();
+
+// Calculate discount percentage
+$discountPercent = 0;
+if ($regularPrice > $finalPrice) {
+    $discountPercent = round((($regularPrice - $finalPrice) / $regularPrice) * 100);
+}
+?>
+
+<div class="custom-price-box">
+    <span class="full-price">
+        <?= __('Full price: %1', $block->formatPrice($regularPrice)) ?>
+    </span>
+
+    <?php if ($discountPercent > 0): ?>
+        <span class="save-percent">
+            <?= __('Save %1%%', $discountPercent) ?>
+        </span>
+    <?php endif; ?>
+</div

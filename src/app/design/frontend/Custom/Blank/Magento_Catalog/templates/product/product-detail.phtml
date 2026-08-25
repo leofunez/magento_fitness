@@ -1,0 +1,81 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ */
+
+$pageTitleHtml = $block->getChildHtml('product_title');
+$pageTitle = trim(strip_tags($pageTitleHtml));
+?>
+
+<div class="product-detail product-sections-container">
+    <!-- Aside -->
+    <aside class="product-detail__aside aside">
+        <?= $block->getChildHtml('sidebar_categories'); ?>
+        <?= $block->getChildHtml('product_upsell_sidebar'); ?>
+        <?= $block->getChildHtml('sidebar_main'); ?>
+        <?= $block->getChildHtml('sidebar_additional'); ?>
+    </aside>
+    <!-- .Aside -->
+
+    <div class="product-detail__content">
+        <!-- Top -->
+        <div class="product-detail__top">
+            <div class="product-detail__media">
+                <?= $block->getChildHtml('product_media'); ?>
+            </div>
+
+            <div class="product-detail__info">
+                <h1 class="product-detail__title">
+                    <?= $pageTitle; ?>
+                </h1>
+
+                <div class="product-detail__reviews">
+                    <?= $block->getChildHtml('product_review'); ?>
+                </div>
+                
+                <div class="product-detail__sku">
+                    <?= $block->getChildHtml('product_sku'); ?>
+                </div>
+
+                <div class="product-detail__stock">
+                    <?= $block->getChildHtml('product_stock'); ?>
+                </div>
+
+                <div class="product-detail__price">
+                    <?= $block->getChildHtml('product_price'); ?>
+                </div>                
+
+                <div class="product-detail__form">
+                    <?= $block->getChildHtml('product_form'); ?>
+                </div>
+
+                <div class="product-detail__wishlist wishlist-container">
+                    <?= $block->getChildHtml('product_wishlist'); ?>
+                    <?= $block->getChildHtml('product_compare'); ?>
+                    <div class="toshare"></div>
+                </div>
+            </div>
+        </div>
+        <!-- .Top -->
+
+        <!-- Bottom -->
+        <div class="product-detail__bottom">
+            <div class="product-detail__description">
+                <?= $block->getChildHtml('product_description'); ?>
+            </div>
+
+            <?php if($block->getChildHtml('product_related')): ?>
+                <?= $block->getChildHtml('product_related'); ?>
+            <?php endif; ?>
+            
+            <?php if($block->getChildHtml('product_upsell')): ?>
+                <?= $block->getChildHtml('product_upsell'); ?>
+            <?php endif; ?>
+
+            <?php if($block->getChildHtml('product_last')): ?>
+                <?= $block->getChildHtml('product_last'); ?>
+            <?php endif; ?>
+        </div>
+        <!-- .Bottom -->
+    </div>
+</div>

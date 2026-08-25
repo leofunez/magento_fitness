@@ -1,0 +1,76 @@
+
+<?php
+/**
+ * @var \Magento\Catalog\Block\Product\View $block
+ */
+$product        = $block->getProduct();
+$formAction     = $block->getAddToCartUrl($product);
+$formKey        = $block->getFormKey();
+$addToCartText  = __('Add to Cart');
+$quantityText   = __('Quantity');
+?>
+
+<?php if ($product && $product->isSaleable()): ?>
+    <form
+        action="<?= $block->escapeUrl($formAction) ?>"
+        method="post"
+        id="product_addtocart_form"
+        data-mage-init='{"catalogAddToCart":{}}'
+        enctype="multipart/form-data"
+    >
+        <input type="hidden" name="form_key" value="<?= $block->escapeHtml($formKey) ?>">
+        <input type="hidden" name="product" value="<?= (int)$product->getId() ?>">
+
+        <div class="product-detail__option">
+            <?= $block->getChildHtml('product_options'); ?>
+        </div>
+
+        <div class="field qty quantity">
+            <label class="label" for="qty">
+                <?= $quantityText ?>
+            </label>
+
+            <div class="control quantity__control">
+                <button type="button" class="quantity__button decrement">-</button>
+                <input
+                    type="number"
+                    name="qty"
+                    id="qty"
+                    min="1"
+                    value="1"
+                    class="input-text qty quantity__input"
+                />
+                <button type="button" class="quantity__button increment">+</button>
+            </div>
+        </div>
+
+        <button
+            type="submit"
+            title="<?= $addToCartText ?>"
+            class="action button button--is-small tocart"
+            id="product-addtocart-button"
+            disabled
+        >
+            <?= $addToCartText ?>
+        </button>
+    </form>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+{
+    "#product_addtocart_form": {
+        "Magento_Catalog/product/view/validation": {
+            "radioCheckboxClosest": ".nested"
+        }
+    }
+}
+</script>
+<script type="text/x-magento-init">
+{
+    "#product_addtocart_form": {
+        "catalogAddToCart": {
+            "bindSubmit": false
+               }
+    }
+}
+</script>

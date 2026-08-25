@@ -1,0 +1,9 @@
+<?php
+/** @var $block \Magento\Theme\Block\Html\Topmenu */
+$menu = $block->getHtml('level-top', 'submenu', 0);
+?>
+<nav class="navigation main-navigation" role="navigation">
+    <ul class="main-navigation__items">
+        <?= $menu ?>
+    </ul>
+</nav>
